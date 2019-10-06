@@ -64,8 +64,10 @@ int main(int argc, const char* argv[]) {
         yn.push_back(ytmp);
     }
 
+    // printing out csv column title
+    cout << "update,seed" << endl;
+
     // running experiments for 1126 times
-    int update_total = 0;
     for (int i = 0; i < 1126; i++) {
 
         // randomly shuffling data
@@ -75,12 +77,12 @@ int main(int argc, const char* argv[]) {
 
         // running PLA
         int update_cnt = pla(xn, yn, cycle);
-        update_total += update_cnt;
+
+        // printing out a row of csv
+        cout << update_cnt << "," << seed << endl;
 
         seed++;
     }
-
-    cout << (float)update_total / 1126 << endl;
 
     return 0;
 }
