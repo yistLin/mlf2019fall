@@ -1,4 +1,4 @@
-.PHONY: all clean
+.PHONY: all clean exp
 
 CC=g++
 CFLAGS=-std=c++11 -O2
@@ -6,7 +6,7 @@ TARGET=pla
 
 all: $(TARGET)
 
-$(TARGET): $(TARGET:=.cpp)
+$(TARGET): src/$(TARGET:=.cpp)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
