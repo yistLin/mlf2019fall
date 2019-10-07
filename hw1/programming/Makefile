@@ -1,14 +1,16 @@
-.PHONY: all clean exp
+.PHONY: all clean exp1
 
 CC=g++
 CFLAGS=-std=c++11 -O2
-
-TARGET=pla
+TARGET=pla pocket
 
 all: $(TARGET)
 
-$(TARGET): src/$(TARGET:=.cpp)
-	$(CC) -o $@ $^ $(CFLAGS)
+pla: src/pla.cpp
+	$(CC) -o $@ $< $(CFLAGS)
+
+pocket: src/pocket.cpp
+	$(CC) -o $@ $< $(CFLAGS)
 
 EXP1_CSV=exp1_records.csv
 EXP1_PNG=exp1_histogram.png
