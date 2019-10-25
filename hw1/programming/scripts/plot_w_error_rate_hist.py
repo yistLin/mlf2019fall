@@ -12,6 +12,7 @@ with open(sys.argv[1]) as f:
         error_rates.append(float(line.split(',')[0]))
 
 avg_error_rate = sum(error_rates) / len(error_rates)
+print("avg_error_rate = {:.2f}%".format(avg_error_rate))
 
 plt.hist(error_rates, bins=np.arange(10, 75, step=0.1), color='#339966', alpha=.75)
 
