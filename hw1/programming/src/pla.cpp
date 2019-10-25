@@ -1,88 +1,78 @@
-#include <iostream>
-#include <sstream>
-#include <array>
-#include <vector>
-#include <cstdlib>
 #include <algorithm>
+#include <array>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <numeric>
 #include <random>
+#include <vector>
 
 using namespace std;
 
-int pla(const vector<array<float, 5>>& x, const vector<int>& y, const vector<unsigned int>& cycle) {
-    // initializing PLA
-    array<float, 5> w = { 0 };
-    bool no_mistake = false;
-    int update_cnt = 0;
+int pla(const vector<array<float, 5>> &x, const vector<int> &y,
+        const vector<unsigned int> &cycle) {
+  // initializing PLA
+  array<float, 5> w = {0};
+  int n_update = 0;
 
-    // updating w
-    while (!no_mistake) {
-        no_mistake = true;
-
-        for (int c : cycle) {
-            float wtx = 0;
-            for (int i = 0; i < 5; i++) {
-                wtx += x[c][i] * w[i];
-            }
-
-            int sign = (wtx > 0.0) ? 1 : -1;
-            if (sign != y[c]) {
-                for (int i = 0; i < 5; i++) {
-                    w[i] += y[c] * x[c][i];
-                }
-                no_mistake = false;
-                update_cnt++;
-            }
-        }
+  // updating w
+  bool no_mistake = false;
+  while (!no_mistake) {
+    no_mistake = true;
+    for (auto c : cycle) {
+      float wtx = inner_product(x[c].begin(), x[c].end(), w.begin(), 0.0);
+      if ((wtx > 0.0 ? 1 : -1) != y[c]) {
+        transform(w.begin(), w.end(), x[c].begin(), w.begin(),
+                  [&](float a, float b) { return a + (float)y[c] * b; });
+        no_mistake = false;
+        n_update++;
+      }
     }
+  }
 
-    return update_cnt;
+  return n_update;
 }
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
 
-    // initializing
-    int seed = 777;
-    if (argc > 1) {
-        seed = atoi(argv[1]);
-    }
-    vector<array<float, 5>> xn;
-    vector<int> yn;
+  if (argc != 3) {
+    cerr << "Usage: ./pla <RANDOM_SEED> <DATA_PATH>" << endl;
+    return 1;
+  }
 
-    // parsing data
-    string line;
-    while (getline(cin, line)) {
+  // initializing
+  ifstream data_stream;
+  int seed = atoi(argv[1]);
+  data_stream.open(argv[2]);
+  vector<array<float, 5>> xn;
+  vector<int> yn;
 
-        istringstream ss(line);
-        array<float, 5> xtmp;
-        int ytmp;
+  // parsing data
+  array<float, 5> xin = {1, 0, 0, 0, 0};
+  int yin;
+  while (data_stream >> xin[1] >> xin[2] >> xin[3] >> xin[4] >> yin) {
+    xn.push_back(xin);
+    yn.push_back(yin);
+  }
+  data_stream.close();
 
-        xtmp[0] = 1;
+  // printing out csv column title
+  cout << "update,seed" << endl;
 
-        ss >> xtmp[1] >> xtmp[2] >> xtmp[3] >> xtmp[4] >> ytmp;
+  // running experiments for 1126 times
+  for (int i = 0; i < 1126; i++, seed++) {
 
-        xn.push_back(xtmp);
-        yn.push_back(ytmp);
-    }
+    // randomly shuffling data
+    vector<unsigned int> cycle(xn.size());
+    iota(cycle.begin(), cycle.end(), 0);
+    shuffle(cycle.begin(), cycle.end(), default_random_engine(seed));
 
-    // printing out csv column title
-    cout << "update,seed" << endl;
+    // running PLA
+    int n_update = pla(xn, yn, cycle);
 
-    // running experiments for 1126 times
-    for (int i = 0; i < 1126; i++) {
+    // printing out a row of csv
+    cout << n_update << "," << seed << endl;
+  }
 
-        // randomly shuffling data
-        vector<unsigned int> cycle(xn.size());
-        iota(cycle.begin(), cycle.end(), 0);
-        shuffle(cycle.begin(), cycle.end(), default_random_engine(seed));
-
-        // running PLA
-        int update_cnt = pla(xn, yn, cycle);
-
-        // printing out a row of csv
-        cout << update_cnt << "," << seed << endl;
-
-        seed++;
-    }
-
-    return 0;
+  return 0;
 }
