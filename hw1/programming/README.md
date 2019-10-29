@@ -23,13 +23,7 @@ make exp1 && make exp2 && make exp3
 ~~~
 
 This will produce 3 CSVs and 3 PNGs.
-They are
-`exp1_records.csv`,
-`exp2_records.csv`,
-`exp3_records.csv` and
-`exp1_histogram.png`,
-`exp2_histogram.png`,
-`exp3_histogram.png`.
+They are `exp1_records.csv`, `exp2_records.csv`, `exp3_records.csv` and `exp1_histogram.png`, `exp2_histogram.png`, `exp3_histogram.png`.
 
 ### Clean Out
 
