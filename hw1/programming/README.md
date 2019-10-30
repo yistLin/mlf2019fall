@@ -34,11 +34,3 @@ make cleanall
 ~~~
 
 to clean everything including executables and the results of experiments.
-
-## Experiment Results
-
-![](images/exp1_histogram.png)
-
-![](images/exp2_histogram.png)
-
-![](images/exp3_histogram.png)
