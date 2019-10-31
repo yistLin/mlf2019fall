@@ -16,7 +16,7 @@ After compilation, 3 program `pla`, `pocket` and `pocket2` will be generated.
 
 ### Run the Experiments
 
-To run the program and plot the result, just type
+To run the program and plot the result, *matplotlib* has to be installed first, also all the data has to be placed under the directory *data/*, then just type
 
 ~~~bash
 make exp1 && make exp2 && make exp3
