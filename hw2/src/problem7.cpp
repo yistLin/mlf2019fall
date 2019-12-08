@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <array>
 #include <iostream>
+
 #include "DataGenerator.hpp"
 
 using namespace std;
