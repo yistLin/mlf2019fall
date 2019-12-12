@@ -1,15 +1,19 @@
 #pragma once
 #include <random>
 
-class DataGenerator {
-private:
-  std::default_random_engine rand_eng;
-  std::uniform_real_distribution<double> rand_dist;
+#include "Data.hpp"
 
-public:
-  DataGenerator(unsigned seed): rand_eng(seed), rand_dist(-1.0, 1.0) {}
+class DataGenerator {
+ private:
+  std::default_random_engine rand_eng;
+  std::uniform_real_distribution<double> dist_input;
+  std::uniform_real_distribution<double> dist_noise;
+
+ public:
+  DataGenerator(unsigned seed)
+      : rand_eng(seed), dist_input(-1.0, 1.0), dist_noise(0.0, 1.0) {}
   virtual ~DataGenerator();
 
   // functions
-  double operator()();
+  Data operator()();
 };
