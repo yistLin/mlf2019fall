@@ -4,7 +4,7 @@ CXX=g++
 CXXFLAGS=-std=c++17 -O2 -Wall -Iinc
 
 OBJS=DataGenerator.o
-TARGET=problem7
+TARGET=decision_stump
 
 %.o: src/%.cpp
 	$(CXX) -c -o $@ $(CXXFLAGS) $<

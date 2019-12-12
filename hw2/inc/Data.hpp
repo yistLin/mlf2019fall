@@ -2,7 +2,8 @@
 
 class Data {
  public:
-  Data() : x(0.0), y(0.0) {}
-  Data(double x, double y) : x(x), y(y) {}
-  double x, y;
+  Data() : x(0.0), y(1) {}
+  Data(double x, int y) : x(x), y(y) {}
+  double x;
+  int y;
 };
