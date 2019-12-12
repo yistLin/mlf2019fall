@@ -10,10 +10,12 @@
 
 using namespace std;
 
+int sign(double d) { return d > 0.0 ? 1 : -1; }
+
 double errorRate(const vector<Data>& data, int s, double theta) {
   int n_error = 0;
   for (auto [x, y] : data) {
-    if (s * int(x > theta) != y) n_error++;
+    if (s * sign(x - theta) != y) n_error++;
   }
   return double(n_error) / double(data.size());
 }
