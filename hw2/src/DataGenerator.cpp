@@ -3,8 +3,8 @@
 DataGenerator::~DataGenerator() {}
 
 Data DataGenerator::operator()() {
-  double x = dist_input(rand_eng);
+  double x = m_inputDist(m_randomEngine);
   int y = x > 0.0 ? 1 : -1;
-  y = dist_noise(rand_eng) > 0.2 ? y : -y;
+  y = m_noiseDist(m_randomEngine) > 0.2 ? y : -y;
   return Data(x, y);
 }

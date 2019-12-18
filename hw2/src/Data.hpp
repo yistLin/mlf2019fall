@@ -1,9 +1,9 @@
 #pragma once
 
-class Data {
- public:
-  Data() : x(0.0), y(1) {}
-  Data(double x, int y) : x(x), y(y) {}
-  double x;
-  int y;
+struct Data {
+  double x = 0.0;
+  int y = 0;
+
+  Data() {};
+  Data(double t_x, int t_y) : x(t_x), y(t_y) {}
 };
