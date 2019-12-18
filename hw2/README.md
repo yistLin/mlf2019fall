@@ -13,7 +13,7 @@ This program is tested (compilable and executable) in the environment:
 To compile the program, simply
 
 ~~~bash
-make
+cmake . && cmake --build .
 ~~~
 
 After compilation, a program named *decision_stump* will be generated.
