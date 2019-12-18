@@ -13,10 +13,13 @@
 using namespace std;
 
 double errorRate(const vector<Data>& data, int s, double theta) {
-  int num_error = 0;
-  for (auto [x, y] : data) {
-    if (s * (x - theta) * y < 0) num_error++;
-  }
+  auto sign = [](double d) -> int { return (d > 0.0) ? 1 : -1; };
+  vector<int> y_bar(size(data));
+  transform(begin(data), end(data), begin(y_bar),
+            [&](const Data& d) {
+              return static_cast<int>(s * sign(d.x - theta) != d.y);
+            });
+  int num_error = accumulate(begin(y_bar), end(y_bar), 0);
   return double(num_error) / double(size(data));
 }
 
@@ -27,8 +30,7 @@ double errorRateOut(int s, double theta) {
 tuple<int, double> decisionStump(const vector<Data>& data) {
   // calculate right boundaries
   vector<double> right_bounds(size(data));
-  transform(begin(data), end(data), begin(right_bounds),
-            [](Data d) -> double { return d.x; });
+  transform(begin(data), end(data), begin(right_bounds), [](Data d) { return d.x; });
   right_bounds.push_back(2.0);
 
   // find s and theta that leads to the lowest E_in
