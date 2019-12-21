@@ -12,13 +12,12 @@
 
 using namespace std;
 
-double errorRate(const vector<Data>& data, int s, double theta) {
+double errorRate(const vector<Data> &data, int s, double theta) {
   auto sign = [](double d) -> int { return (d > 0.0) ? 1 : -1; };
   vector<int> y_bar(size(data));
-  transform(begin(data), end(data), begin(y_bar),
-            [&](const Data& d) {
-              return static_cast<int>(s * sign(d.x - theta) != d.y);
-            });
+  transform(begin(data), end(data), begin(y_bar), [&](const Data &d) {
+    return static_cast<int>(s * sign(d.x - theta) != d.y);
+  });
   int num_error = accumulate(begin(y_bar), end(y_bar), 0);
   return double(num_error) / double(size(data));
 }
@@ -27,10 +26,11 @@ double errorRateOut(int s, double theta) {
   return 0.5 + 0.3 * double(s) * (abs(theta) - 1.0);
 }
 
-tuple<int, double> decisionStump(const vector<Data>& data) {
+tuple<int, double> decisionStump(const vector<Data> &data) {
   // calculate right boundaries
   vector<double> right_bounds(size(data));
-  transform(begin(data), end(data), begin(right_bounds), [](Data d) { return d.x; });
+  transform(begin(data), end(data), begin(right_bounds),
+            [](Data d) { return d.x; });
   right_bounds.push_back(2.0);
 
   // find s and theta that leads to the lowest E_in
@@ -52,7 +52,7 @@ tuple<int, double> decisionStump(const vector<Data>& data) {
   return {s_best, theta_best};
 }
 
-int main(int argc, char* const argv[]) {
+int main(int argc, char *const argv[]) {
   assert(argc > 1);
   const int num_data = atoi(argv[1]);
 
