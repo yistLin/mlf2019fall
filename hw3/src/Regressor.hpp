@@ -1,5 +1,8 @@
 #pragma once
 #include "DataLoader.hpp"
+#include <algorithm>
+#include <cmath>
+#include <numeric>
 #include <vector>
 
 typedef std::vector<double> Weights;

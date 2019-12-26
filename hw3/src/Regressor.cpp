@@ -1,9 +1,5 @@
 #include "Regressor.hpp"
 
-#include <algorithm>
-#include <cmath>
-#include <numeric>
-
 Regressor::Regressor(int dim_input) {
   weights.resize(dim_input);
   std::fill(std::begin(weights), std::end(weights), 0.0);
