@@ -1,14 +1,14 @@
 #include "DataLoader.hpp"
 #include "Regressor.hpp"
 #include <iostream>
+#include <numeric>
 using namespace std;
 
 double error_rate(Regressor regressor, const DataLoader::Dataset &dataset) {
-  int num_error = 0;
-  for (auto &[x, y] : dataset) {
-    if (regressor.predict(x) != y)
-      num_error++;
-  }
+  int num_error =
+      accumulate(begin(dataset), end(dataset), 0, [&](int a, auto b) {
+        return a + static_cast<int>(regressor.predict(get<0>(b)) != get<1>(b));
+      });
   return static_cast<double>(num_error) / static_cast<double>(size(dataset));
 }
 
