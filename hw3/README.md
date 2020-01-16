@@ -1,6 +1,6 @@
 # Implementation of Logistic Regression
 
-I implemented the algorithms in *C++17* and plotted the histograms with the help of *PGFPlots*.
+I implemented the algorithms in *C++17* and plotted the histograms with the help of *PGFPlots* (The latter is not included here).
 
 ## Usage
 
