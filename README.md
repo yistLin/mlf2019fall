@@ -6,4 +6,5 @@ In this course, students have to implement 3 machine learning algorithms:
 - Perceptron Learning Algorithm
 - Decision Stump
 - Logistic Regression
+
 And I implemented all of them in C++17.
